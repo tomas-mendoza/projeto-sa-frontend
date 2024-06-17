@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import ClassRegister from "../pages/ClassRegister"
+import CreateSubject from "../pages/CreateSubject";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: '/chamada',
     element: <ClassRegister />
+  },
+  {
+    path: '/cadastrar/materia',
+    element: <CreateSubject />
   }
 ]);
 
