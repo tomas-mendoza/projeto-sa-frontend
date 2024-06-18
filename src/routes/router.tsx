@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import ClassRegister from "../pages/ClassRegister"
 import SubjectList from "../pages/SubjectList"
+import CreateClass from "../pages/CreateClass";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: '/materias',
     element: <SubjectList />
+  },
+  {
+    path: '/cadastroturma',
+    element: <CreateClass />
   }
 ]);
 

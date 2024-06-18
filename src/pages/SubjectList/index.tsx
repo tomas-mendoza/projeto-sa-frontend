@@ -1,5 +1,4 @@
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+
 import {useState, useEffect} from 'react';
 import { Subject } from '../../types/Subject';
 import SubjectCard from '../../components/SubjectCard';
