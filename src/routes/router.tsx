@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import ClassRegister from "../pages/ClassRegister"
 import SubjectList from "../pages/SubjectList"
 import CreateClass from "../pages/CreateClass";
+import SubjectForm from "../pages/SubjectForm";
 
 const router = createBrowserRouter([
   {
@@ -23,8 +24,16 @@ const router = createBrowserRouter([
     element: <SubjectList />
   },
   {
-    path: '/cadastroturma',
+    path: '/cadastrar/turma',
     element: <CreateClass />
+  },
+  {
+    path: '/cadastrar/materia',
+    element: <SubjectForm />
+  },
+  {
+    path: '/editar/materia/:id',
+    element: <SubjectForm />
   }
 ]);
 
