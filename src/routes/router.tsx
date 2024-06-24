@@ -5,35 +5,85 @@ import ClassRegister from "../pages/ClassRegister"
 import SubjectList from "../pages/SubjectList"
 import CreateClass from "../pages/CreateClass";
 import SubjectForm from "../pages/SubjectForm";
+import authValidator from "../middleware/authValidator";
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />
+    element: <Home />,
+    loader: async () => {
+      if(!(await authValidator())) {
+        window.location.href = '/login';
+      }
+
+      return null;
+    }
   },
   {
     path: '/login',
-    element: <Login />
+    element: <Login />,
+    loader: async () => {
+      if(await authValidator()) {
+        window.location.href = '/';
+      }
+      
+      return null;
+    }
   },
   {
     path: '/chamada',
-    element: <ClassRegister />
+    element: <ClassRegister />,
+        loader: async () => {
+      if(await authValidator()) {
+        window.location.href = '/';
+      }
+      
+      return null;
+    }
   },
   {
     path: '/materias',
-    element: <SubjectList />
+    element: <SubjectList />,
+        loader: async () => {
+      if(await authValidator()) {
+        window.location.href = '/';
+      }
+      
+      return null;
+    }
   },
   {
     path: '/cadastrar/turma',
-    element: <CreateClass />
+    element: <CreateClass />,
+        loader: async () => {
+      if(await authValidator()) {
+        window.location.href = '/';
+      }
+      
+      return null;
+    }
   },
   {
     path: '/cadastrar/materia',
-    element: <SubjectForm />
+    element: <SubjectForm />,
+        loader: async () => {
+      if(await authValidator()) {
+        window.location.href = '/';
+      }
+      
+      return null;
+    }
   },
   {
     path: '/editar/materia/:id',
-    element: <SubjectForm />
+    element: <SubjectForm />,
+        loader: async () => {
+      if(await authValidator()) {
+        window.location.href = '/';
+      }
+      
+      return null;
+    }
   }
 ]);
 

@@ -1,6 +1,7 @@
 import { Button, Form } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import login from '../../data/login';
+import { useNavigate } from 'react-router-dom';
 
 type FormInputs = {
   cpf: string;
@@ -9,10 +10,13 @@ type FormInputs = {
 
 export default function Login() {
   const { register, handleSubmit } = useForm<FormInputs>();
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<FormInputs> = async ({ cpf, password }) => {
     try {
-      const response = await login(cpf, password);
-      console.log(response);
+      await login(cpf, password);
+      
+      navigate('/');
     } catch(err: unknown) {
       console.error(err);
     }
@@ -25,7 +29,7 @@ export default function Login() {
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group className='mb-3' controlId="cpfInput">
               <Form.Label>CPF</Form.Label>
-              <Form.Control type='text' placeholder='Digite o seu CPF' { ... register('cpf', { required: true })} />
+              <Form.Control type='text' maxLength={11} placeholder='Digite o seu CPF' { ... register('cpf', { required: true })} />
             </Form.Group>
             <Form.Group className='mb-3' controlId="passwordInput">
               <Form.Label>Senha</Form.Label>
