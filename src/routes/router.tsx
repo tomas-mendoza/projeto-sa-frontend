@@ -33,55 +33,55 @@ const router = createBrowserRouter([
   {
     path: '/chamada',
     element: <ClassRegister />,
-        loader: async () => {
-      if(await authValidator()) {
-        window.location.href = '/';
+    loader: async () => {
+      if(!(await authValidator())) {
+        window.location.href = '/login';
       }
-      
+
       return null;
     }
   },
   {
     path: '/materias',
     element: <SubjectList />,
-        loader: async () => {
-      if(await authValidator()) {
-        window.location.href = '/';
+    loader: async () => {
+      if(!(await authValidator())) {
+        window.location.href = '/login';
       }
-      
+
       return null;
     }
   },
   {
     path: '/cadastrar/turma',
     element: <CreateClass />,
-        loader: async () => {
-      if(await authValidator()) {
-        window.location.href = '/';
+    loader: async () => {
+      if(!(await authValidator())) {
+        window.location.href = '/login';
       }
-      
+
       return null;
     }
   },
   {
     path: '/cadastrar/materia',
     element: <SubjectForm />,
-        loader: async () => {
-      if(await authValidator()) {
-        window.location.href = '/';
+    loader: async () => {
+      if(!(await authValidator())) {
+        window.location.href = '/login';
       }
-      
+
       return null;
     }
   },
   {
     path: '/editar/materia/:id',
     element: <SubjectForm />,
-        loader: async () => {
-      if(await authValidator()) {
-        window.location.href = '/';
+    loader: async () => {
+      if(!(await authValidator())) {
+        window.location.href = '/login';
       }
-      
+
       return null;
     }
   }
