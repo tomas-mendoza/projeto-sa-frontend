@@ -52,7 +52,7 @@ export default function SubjectForm() {
       <Header />
       <main className="container mt-2">
         <div className="col-12">
-          <h1 className="fs-3">Cadastro de matéria</h1>
+          <h1 className="fs-3">{ params.id ? 'Edição' : 'Cadastro'} de matéria</h1>
         </div>
         <Form onSubmit={handleSubmit(params.id ? handleEdit : handleCreate)} className="mt-2">
           <Form.Group className="col-6 mb-3" controlId="name">
@@ -63,7 +63,7 @@ export default function SubjectForm() {
             </Form.Control.Feedback>
           </Form.Group>
           <Button variant="primary" type="submit">
-            Cadastrar
+          { params.id ? 'Editar' : 'Cadastrar'}
           </Button>
         </Form>
       </main>

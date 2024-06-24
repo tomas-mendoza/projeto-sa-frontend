@@ -6,6 +6,7 @@ import SubjectList from "../pages/SubjectList"
 import CreateClass from "../pages/CreateClass";
 import SubjectForm from "../pages/SubjectForm";
 import authValidator from "../middleware/authValidator";
+import UserForm from '../pages/UserForm';
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,17 @@ const router = createBrowserRouter([
   {
     path: '/editar/materia/:id',
     element: <SubjectForm />,
+    loader: async () => {
+      if(!(await authValidator())) {
+        window.location.href = '/login';
+      }
+
+      return null;
+    }
+  },
+  {
+    path: '/cadastrar/usuario/',
+    element: <UserForm />,
     loader: async () => {
       if(!(await authValidator())) {
         window.location.href = '/login';
