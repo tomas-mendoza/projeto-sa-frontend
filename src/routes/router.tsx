@@ -3,10 +3,11 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import ClassRegister from "../pages/ClassRegister"
 import SubjectList from "../pages/SubjectList"
-import CreateClass from "../pages/CreateClass";
+import ClassForm from '../pages/ClassForm';
 import SubjectForm from "../pages/SubjectForm";
 import authValidator from "../middleware/authValidator";
 import UserForm from '../pages/UserForm';
+import ClassList from "../pages/ClassList";
 
 const router = createBrowserRouter([
   {
@@ -55,7 +56,18 @@ const router = createBrowserRouter([
   },
   {
     path: '/cadastrar/turma',
-    element: <CreateClass />,
+    element: <ClassForm />,
+    loader: async () => {
+      if(!(await authValidator())) {
+        window.location.href = '/login';
+      }
+
+      return null;
+    }
+  },
+  {
+    path: '/editar/turma/:id',
+    element: <ClassForm />,
     loader: async () => {
       if(!(await authValidator())) {
         window.location.href = '/login';
@@ -115,6 +127,18 @@ const router = createBrowserRouter([
 
       if(!['administrador', 'estudante', 'professor'].includes(type)) {
         window.location.href = '/'
+        return;
+      }
+
+      return null;
+    }
+  },
+  {
+    path: '/turmas',
+    element: <ClassList />,
+    loader: async () => {
+      if(!(await authValidator())) {
+        window.location.href = '/login';
         return;
       }
 
