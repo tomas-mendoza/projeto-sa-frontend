@@ -49,6 +49,9 @@ export default function ClassList() {
       <Header />
       <main className="w-100 container mt-5">
         <div className="row">
+          <h1>Turmas</h1>
+        </div>
+        <div className="row mt-4">
           <div className="col-3">
             <Link to='/cadastrar/turma' className="btn btn-primary">
               Cadastrar

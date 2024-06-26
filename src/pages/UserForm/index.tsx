@@ -70,6 +70,8 @@ export default function UserForm() {
       }
 
       await createUser(data);
+
+      window.alert('Criado com sucesso!');
     } catch(err: unknown) {
       window.alert(err);
     }
@@ -79,6 +81,8 @@ export default function UserForm() {
     try {
       if(params.id) {
         await updateUser(params.id, data);
+
+        window.alert('Editado com sucesso!');
       }
     } catch(err: unknown) {
       console.log(err);

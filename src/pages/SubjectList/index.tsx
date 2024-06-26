@@ -1,52 +1,85 @@
+import { useEffect, useState } from "react";
+import Header from "../../components/Header";
+import { Subject } from "../../types/Subject";
+import { Link } from "react-router-dom";
+import api from "../../services/api";
+import { Button, Card } from "react-bootstrap";
 
-import {useState, useEffect} from 'react';
-import { Subject } from '../../types/Subject';
-import SubjectCard from '../../components/SubjectCard';
-import Header from '../../components/Header';
+export default function SubjectList() {
+    const [subjects, setSubjects] = useState<Subject[]>([]);
 
+    const handleDelete = async (id: number) => {
+        try {
+            await api({
+                url: '/subjects/' + id,
+                method: 'DELETE'
+            });
 
+            const index = subjects.findIndex((oldSubject) => oldSubject.id === id);
 
-const example: Subject[]=[
-    {
-        name: "Lingua Portuguesa",
-        description: "Materia designada para aprendizado de literatura e regras de linguagem."
-    },
-    {
-        name: "Matemática",
-        description: "Materia designada para aprendizado de cálculos e funções."
-    },
-    {
-        name: "História",
-        description: "Materia designada para aprendizado do passado."
-    },
-    {
-        name: "Geografia",
-        description: "Materia designada para aprendizado de economia e mapas."
+            if(index >= 0) {
+                const newSubjects = [ ... subjects ];
+
+                newSubjects.splice(index, 1);
+
+                setSubjects(newSubjects);
+            }
+        } catch(err: unknown) {
+            window.alert(err);
+        }
     }
-]
-function SubjectList() {
 
-    const [subjects, setSubjects]=useState([] as Subject[]);
-    
-    useEffect(()=>{
-        setSubjects(example);
-    })
-  
+    useEffect(() => {
+        const handleSearch = async () => {
+            try {
+                const response = await api<{ data: Subject[] }>({
+                    url: '/subjects',
+                    method: 'GET'
+                });
+
+                setSubjects(response.data.data);
+            } catch(err: unknown) {
+                window.alert(err);
+            }
+        }
+
+        handleSearch();
+    }, []);
+
     return (
-    <>
-        <Header />
-        <main className="container mt-4">
-            <div className="row gy-4 gx-3">
-                {subjects.length > 0 && subjects.map((subject,index)=>(
-                    <div className="col">
-                        <SubjectCard subject={subject} key={index} />
+        <>
+            <Header />
+            <main className="w-100 container mt-5">
+                <div className="row">
+                    <h1>Matérias</h1>
+                </div>
+                <div className="row mt-4">
+                    <div className="col-3">
+                        <Link to='/cadastrar/materia' className="btn btn-primary">
+                            Cadastrar
+                        </Link>
                     </div>
-                ))}
-            </div>
-        </main>
-    </>
-
-  );
+                </div>
+                <div className="row mt-5">
+                    {
+                    subjects.length > 0 && subjects.map((subject) => (
+                        <div className="col-12 col-lg 6 col-md-6" key={subject.id}>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Body>
+                                <Card.Text>
+                                    {subject.name}
+                                </Card.Text>
+                                <div className="d-flex justify-content-between">
+                                    <Link className='btn btn-primary' to={`/editar/materia/${subject.id}`}>Editar</Link>
+                                    <Button variant={'danger'} onClick={() => handleDelete(subject.id)}>Deletar</Button>
+                                </div>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    ))
+                    }
+                </div>
+            </main>
+        </>
+    )
 }
-
-export default SubjectList;

@@ -16,3 +16,12 @@ export async function getUserById(id: string, type: string) {
 
   return response;
 }
+
+export async function getUser(type: string) {
+  const response = await api<{ data: UserResponse }>({
+    url: `/${type}`,
+    method: 'GET'
+  });
+
+  return response;
+}

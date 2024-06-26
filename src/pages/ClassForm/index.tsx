@@ -19,6 +19,7 @@ function ClassForm() {
   const handleCreate = async ({ description }: IFormInput) => {
     try {
       await createClass(description);
+      window.alert('Criado com sucesso!');
     } catch(err: unknown) {
       window.alert(err);
     }
@@ -28,6 +29,7 @@ function ClassForm() {
     try {
       if(params.id) {
         await editClass(params.id, description)
+        window.alert('Editado com sucesso!');
       }
     } catch(err: unknown) {
       window.alert(err);
