@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import { Button } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { createUser } from "../../data/setUser";
+import { createUser, updateUser } from "../../data/setUser";
 import { getUserById } from "../../data/getUser";
 
 interface IFormInputs {
@@ -22,12 +22,26 @@ export default function UserForm() {
   useEffect(() => {
     const handleSearch = async () => {
       try {
+        if(params.type) {
+          const types = {
+            'administrador': 'admins',
+            'professor': 'teachers',
+            'estudante': 'students'
+          }
+
+          const type = types[params.type as keyof typeof types];
+
+          if(['teachers', 'students', 'admins'].includes(type)) {
+            setValue("type", type as 'students' | 'teachers' | 'admins');
+          }
+        }
+
         if(params.id) {
-          const response = await getUserById(params.id, "admin");
+          const response = await getUserById(params.id, "admins");
 
           setValue("name", response.data.data.name);
           setValue("cpf", response.data.data.cpf);
-          setValue("birthdate", response.data.data.birthdate);
+          setValue("birthdate", response.data.data.birthdate.split('T')[0]);
           
           if(response.data.data.permission_level === 0) {
             setValue("type", "admins");
@@ -51,16 +65,23 @@ export default function UserForm() {
 
   const handleCreate = async (data: IFormInputs) => {
     try {
+      if(!data.password) {
+        throw new Error('Insira uma senha');
+      }
+
       await createUser(data);
     } catch(err: unknown) {
       window.alert(err);
     }
   }
 
-  const handleEdit = async () => {
+  const handleEdit = async (data: IFormInputs) => {
     try {
-      
+      if(params.id) {
+        await updateUser(params.id, data);
+      }
     } catch(err: unknown) {
+      console.log(err);
       window.alert(err);
     }
   }
@@ -91,7 +112,7 @@ export default function UserForm() {
           </Form.Group>
           <Form.Group className="col-6 mb-3" controlId="password">
             <Form.Label>Senha</Form.Label>
-            <Form.Control type="password" placeholder="Insira a senha do usuário" { ... register('password', { required: true })} required />
+            <Form.Control type="password" placeholder="Insira a senha do usuário" { ... register('password')} />
           </Form.Group>
           <Form.Group className="col-6 mb-3" controlId="birthdate">
             <Form.Label>Data de nascimento</Form.Label>

@@ -96,6 +96,30 @@ const router = createBrowserRouter([
 
       return null;
     }
+  },
+  {
+    path: '/editar/:type/:id',
+    element: <UserForm />,
+    loader: async (route) => {
+      if(!(await authValidator())) {
+        window.location.href = '/login';
+        return;
+      }
+
+      const type = route.params.type;
+
+      if(!type) {
+        window.location.href = '/'
+        return;
+      }
+
+      if(!['administrador', 'estudante', 'professor'].includes(type)) {
+        window.location.href = '/'
+        return;
+      }
+
+      return null;
+    }
   }
 ]);
 
