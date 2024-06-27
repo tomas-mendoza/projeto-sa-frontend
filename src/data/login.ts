@@ -6,7 +6,7 @@ interface LoginResponse {
 }
 
 export default async function login(cpf: string, password: string) {
-  const response = await api<LoginResponse>({
+  const response = await api<{ data: LoginResponse }>({
     method: 'POST',
     url: '/auth',
     body: {

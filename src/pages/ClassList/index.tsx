@@ -19,11 +19,11 @@ export default function ClassList() {
 
       const index = classes.findIndex((oneClass) => oneClass.id === id);
 
-      if(index) {
-        const newClasses = classes;
+      if(index >= 0) {
+        const newClasses = [ ... classes ];
         newClasses.splice(index, 1);
-
-        setClasses([... newClasses]);
+        
+        setClasses(newClasses);
       }
     } catch(err: unknown) {
       window.alert(err);

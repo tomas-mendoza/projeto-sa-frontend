@@ -15,8 +15,7 @@ export default function Login() {
   const onSubmit: SubmitHandler<FormInputs> = async ({ cpf, password }) => {
     try {
       await login(cpf, password);
-      
-      navigate('/');
+      navigate('/turmas');
     } catch(err: unknown) {
       console.error(err);
     }
