@@ -4,3 +4,6 @@ Variáveis de ambiente
 ```
 VITE_API_URL={url}
 ```
+
+login: 11111111111
+senha: admin
